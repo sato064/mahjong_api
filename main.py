@@ -92,19 +92,50 @@ def read_item(item: Dict):
         elif i in '123456789':
             continue
         elif i in 'tnelwgr':
-            dora_indicators.append(TilesConverter.string_to_136_array(sou=str(doras[c]))[0])
-    #ツモ処理
+            if k == "t":
+                win_tile = TilesConverter.string_to_136_array(honors='1')[0]
+            if k == "n":
+                win_tile = TilesConverter.string_to_136_array(honors='2')[0]
+            if k == "l":
+                win_tile = TilesConverter.string_to_136_array(honors='3')[0]
+            if k == "e":
+                win_tile = TilesConverter.string_to_136_array(honors='4')[0]
+            if k == "w":
+                win_tile = TilesConverter.string_to_136_array(honors='5')[0]
+            if k == "g":
+                win_tile = TilesConverter.string_to_136_array(honors='6')[0]
+            if k == "r":
+                win_tile = TilesConverter.string_to_136_array(honors='7')[0]
+    # ツモ処理
     if tsumo == 0:
         is_tsumoed = False
     if tsumo == 1:
         is_tsumoed = True
-    #リーチ処理
+    # リーチ処理
     if reach == 0:
         is_reach = False
     if reach == 1:
         is_reach = True
+    # 風の変換
+    if SELF_WIND == "EAST":
+        player_wind = EAST
+    elif SELF_WIND == "WEST":
+        player_wind = WEST
+    elif SELF_WIND == "SOUTH":
+        player_wind = SOUTH
+    elif SELF_WIND == "NORTH":
+        player_wind = NORTH
+
+    if FIELD_WIND == "EAST":
+        round_wind = EAST
+    elif FIELD_WIND == "WEST":
+        round_wind = WEST
+    elif FIELD_WIND == "SOUTH":
+        round_wind = SOUTH
+    elif FIELD_WIND == "NORTH":
+        round_wind = NORTH
     
-    config = HandConfig(is_tsumo = is_tsumoed, is_riichi=is_reach, player_wind=SELF_WIND, round_wind=FIELD_WIND)
+    config = HandConfig(is_tsumo = is_tsumoed, is_riichi=is_reach, player_wind=player_wind, round_wind=round_wind)
     result = calculator.estimate_hand_value(tiles, win_tile, melds, dora_indicators, config)
     print(result)
     d = {'oya_point' : result.cost['main'], 'co_point' : result.cost['additional'] , 'yaku' : result.yaku}
