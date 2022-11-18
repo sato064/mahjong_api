@@ -1,8 +1,12 @@
 {
-	"s_hand": "12399",
-	"p_hand": "111999",
-	"m_hand": "111",
-	"win": "m1",
-	"tsumo": 1,
-	"doras": "p8p9"
+	"s_hand": "111",
+	"p_hand": "789",
+	"m_hand": "999",
+    "h_hand": "ttnnn",
+	"win": "t",
+	"tsumo": 0,
+	"doras": "e",
+    "self_wind":"EAST",
+    "field_wind":"EAST",
+    "reach":1
 }
