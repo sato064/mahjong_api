@@ -27,6 +27,7 @@ def read_item(item: Dict):
     m_hand = item["m_hand"]
     win = item["win"]
     tsumo = item["tsumo"]
+    doras = item["doras"]
     print(m_hand)
     print(p_hand)
     print(s_hand)
@@ -37,9 +38,20 @@ def read_item(item: Dict):
         win_tile = TilesConverter.string_to_136_array(pin=win[1])[0]
     if(win[0] == "m"):
         print(win[1])
-        win_tile = TilesConverter.string_to_136_array(man=win[1])[0]    
+        win_tile = TilesConverter.string_to_136_array(man=win[1])[0]
     melds = None
-    dora_indicators = None
+    dora_indicators = []
+    print(doras)
+    for c, i in enumerate(doras):
+        if i == "s":
+            print(doras[c+1])
+            dora_indicators.append(TilesConverter.string_to_136_array(sou=str(doras[c+1]))[0])
+        if i == "p":
+            dora_indicators.append(TilesConverter.string_to_136_array(pin=str(doras[c+1]))[0])
+        if i == "m":
+            dora_indicators.append(TilesConverter.string_to_136_array(man=str(doras[c+1]))[0])
+        if i in '123456789':
+            continue
     if tsumo == 0:
         is_tsumoed = False
     if tsumo == 1:
@@ -47,5 +59,5 @@ def read_item(item: Dict):
     config = HandConfig(is_tsumo = is_tsumoed)
     result = calculator.estimate_hand_value(tiles, win_tile, melds, dora_indicators, config)
     print(result)
-    d = {'point' : result.cost['main'], 'yaku' : result.yaku}
+    d = {'oya_point' : result.cost['main'], 'co_point' : result.cost['additional'] , 'yaku' : result.yaku}
     return d
